@@ -6,15 +6,19 @@ on:
     types: [opened, reopened]
 jobs:
   test:
-    name: Hello World
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platforms: [ubuntu-latest, windows-latest]
+        php-versions: [8.0, 8.1]
+    name: Checking code on ${{matrix.platforms}} for PHP version ${{matrix.php-versions}}
+    runs-on: ${{matrix.platforms}}
     steps:
     - name: Checkout our code
       uses: actions/checkout@v2.4.2
     - name: Setup PHP
       uses: shivammathur/setup-php@2.21.1
       with:
-        php-version: 8.1
+        php-version: ${{matrix.php-versions}}
         extensions: grpc
     - run: composer update
     - name: Test the code
