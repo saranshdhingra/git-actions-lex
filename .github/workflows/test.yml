@@ -12,7 +12,6 @@ jobs:
       with:
         php-version: 8.1
         extensions: grpc
-    - name: Verify
-      run: |
-        php -v
-        php -m|grep grpc
+    - run: composer update
+    - name: Test the code
+      run: ./vendor/bin/phpunit tests/OperationsTest.php
