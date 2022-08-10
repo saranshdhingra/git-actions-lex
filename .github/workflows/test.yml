@@ -5,9 +5,14 @@ jobs:
     name: Hello World
     runs-on: ubuntu-latest
     steps:
-    - name: Verify pre checkout
-      run: ls
     - name: Checkout our code
       uses: actions/checkout@v2.4.2
+    - name: Setup PHP
+      uses: shivammathur/setup-php@2.21.1
+      with:
+        php-version: 8.1
+        extensions: grpc
     - name: Verify
-      run: ls
+      run: |
+        php -v
+        php -m|grep grpc
